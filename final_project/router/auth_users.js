@@ -61,10 +61,10 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
           filtered_book['reviews'][reviewer] = review;
           books[isbn] = filtered_book;
       }
-      res.send(`The review for the book with ISBN  ${isbn} has been added/updated.`);
+      res.status(200).json({message: `Review for ISBN ${isbn} added/updated.`});
   }
   else{
-      res.send("Unable to find book!");
+      res.status(404).json({message: "Unable to find book!"});
   }
 });
 
@@ -76,12 +76,12 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
       let reviews = filtered_book['reviews'];
       if (reviews[reviewer]) {
           delete reviews[reviewer];
-          res.send(`Reviews for the ISBN  ${isbn} posted by the user ${reviewer} deleted.`);
+          res.status(200).json({message: `Review for ISBN ${isbn} deleted.`});
       } else {
-          res.send("Can't find review from this user to delete.");
+          res.status(404).json({message: "Can't find review from this user to delete."});
       }
   } else {
-      res.send("Unable to find book!");
+      res.status(404).json({message: "Unable to find book!"});
   }
 });
 
